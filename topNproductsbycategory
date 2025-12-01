@@ -1,0 +1,45 @@
+-- Find the top 3 products by revenue catgory
+
+--db schema 
+CREATE TABLE products (
+    product_id INT,
+    product_name VARCHAR(50),
+    category VARCHAR(50)
+);
+
+CREATE TABLE sales (
+    sale_id INT,
+    product_id INT,
+    revenue INT
+);
+
+INSERT INTO products VALUES
+(1, 'Phone', 'Electronics'),
+(2, 'Laptop', 'Electronics'),
+(3, 'Tablet', 'Electronics'),
+(4, 'TV', 'Electronics'),
+(5, 'Shirt', 'Clothing'),
+(6, 'Jeans', 'Clothing'),
+(7, 'Jacket', 'Clothing');
+
+INSERT INTO sales VALUES
+(1, 1, 3000),
+(2, 2, 5000),
+(3, 3, 2000),
+(4, 4, 4000),
+(5, 5, 1500),
+(6, 6, 2500),
+(7, 7, 3500);
+
+
+-- solution 
+select product_name, category, revenue
+from(
+  select p.product_name, p.category, s.revenue,
+  Rank() Over(partition by p.category order by revenue desc) as rankings
+  
+  from products p join sales s using(product_id)
+  ) as ranktable
+  
+  where rankings <= 3
+  order by category, revenue desc;
