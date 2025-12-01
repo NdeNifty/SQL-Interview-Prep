@@ -1,0 +1,24 @@
+-- Remove duplicate customer emails but keep only the newest record
+
+  -- db schema 
+  CREATE TABLE users (
+    user_id INT,
+    email VARCHAR(100),
+    created_at DATE
+);
+
+INSERT INTO users VALUES
+(1, 'test@email.com', '2024-01-01'),
+(2, 'test@email.com', '2024-01-10'),
+(3, 'john@email.com', '2024-01-05'),
+(4, 'john@email.com', '2024-01-12');
+
+-- solution 
+
+  delete u1 from users u1
+join users u2 
+on u1.email = u2.email
+AND u1.created_at < u2.created_at;
+
+-- to confirm deletion 
+select * from users
