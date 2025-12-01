@@ -1,0 +1,21 @@
+-- Return the second highest salary from the employees table.
+
+--Db query 
+CREATE TABLE employees (
+    id INT,
+    name VARCHAR(50),
+    salary INT
+);
+
+INSERT INTO employees VALUES
+(1, 'Alice', 8000),
+(2, 'Bob', 6000),
+(3, 'Charlie', 7000),
+(4, 'Diana', 9000),
+(5, 'Eve', 7000);
+
+-- solution 
+Select Distinct name, salary 
+from employees
+order by salary desc
+limit 1,1;
